@@ -46,6 +46,6 @@ app.get('/', (req: Request, res: Response) => {
 // app.use(globalErrorHandler);
 
 // not found route error
-// app.use(notFound);
+app.use(notFound);
 
 export default app;
