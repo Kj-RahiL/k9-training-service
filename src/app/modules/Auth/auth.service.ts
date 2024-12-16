@@ -14,7 +14,7 @@ const signupFromDB = async (payload: TUser) => {
     throw new AppError(403, "This user already exists");
   }
 
-  payload.role = USER_ROLE.admin;
+  payload.role = USER_ROLE.user;
 
   const newUser = await User.create(payload);
   return newUser;

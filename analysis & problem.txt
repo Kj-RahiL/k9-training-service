@@ -1,0 +1,39 @@
+user model----->
+    name
+    email,
+    phone,
+    gender,
+    address,
+    role,
+    password,
+
+service model------->
+    name,
+    image,
+    description
+
+
+product model------->
+    name,
+    price,
+    size,
+    color,
+    stock,
+    description,
+
+payment model------>
+    productId,
+    productName,
+    quantity,
+    price
+
+
+#facing problem
+    1. forget password code generate
+    2. payment problem
+    3. hosting image 
+
+
+
+
+

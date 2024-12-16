@@ -8,33 +8,30 @@ const productSchema = new Schema<TProduct>(
       required: [true, "Service name is required"],
       unique: true,
     },
+    image: {
+      type: String,
+      required: [true, "Image is required"],
+      unique: false,
+    },
     price: {
       type: Number,
       required: [true, "Price is required"],
     },
-    size: {
-        type: String,
-        enum: {
-          values: ['S', 'M', 'L', 'XL', 'XXL'],
-          message: '{VALUE} is not a valid size',
-        },
-        required: [true, 'size is required'],
+    sizes: {
+      type: [String],
+      default: ["S", "M", "L", "XL", "XXL"],
     },
-    color: {
-      type: String,
-      enum: {
-        values: ['black', 'white', 'green', 'orange'],
-        message: '{VALUE} is not a valid color',
-      },
-      required: [true, "color is required"],
+    colors: {
+      type: [String],
+      default: ["black", "white", "green", "orange"],
     },
-    quantity: {
+    stock: {
       type: Number,
       required: [true, "number is required"],
     },
     description: {
       type: String,
-      required: [true, "description link is required"]
+      required: [true, "description link is required"],
     },
   },
   {

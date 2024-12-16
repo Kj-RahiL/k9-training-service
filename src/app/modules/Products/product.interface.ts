@@ -1,8 +1,9 @@
 export type TProduct = {
   name: string;
+  image: string;
   price: number;
-  size: 'S' | 'M' | 'L'| 'XL' | 'XXL' ;
-  color:'black' | 'white' | 'green' | 'orange';
-  quantity: number;
-  description: string;
+  sizes?: string[];
+  colors?: string[];
+  description?: string;
+  stock: number;
 };

@@ -29,7 +29,7 @@ router.delete(
   userControllers.deleteUser,
 );
 
-//getAll
+//get All user
 router.get('/', userControllers.getAllUser);
 
 export const UserRoutes = router;

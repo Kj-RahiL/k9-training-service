@@ -13,6 +13,7 @@ const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
     if (!token) {
       throw new AppError(401, "You're not authorized, auth");
     }
+
     const decoded = jwt.verify(
       token,
       config.jwt_access_secret as string
