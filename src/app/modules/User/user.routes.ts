@@ -14,6 +14,13 @@ router.post(
   userControllers.createAdmin,
 );
 
+//create admin
+router.post(
+  '/create-trainer',
+  validateRequest(UserValidations.userValidationSchema),
+  userControllers.createTrainer,
+);
+
 //get single user
 router.get('/:id', userControllers.getUser);
 

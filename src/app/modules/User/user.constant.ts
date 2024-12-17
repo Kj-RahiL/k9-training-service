@@ -1,5 +1,6 @@
 export const USER_ROLE = {
     admin: 'admin',
+    trainer: 'trainer',
     user: "user"
   } as const;
   

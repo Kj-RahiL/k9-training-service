@@ -16,6 +16,19 @@ const createAdminIntoDB = async (payload: TUser) => {
   const admin = await User.create(payload);
   return admin;
 };
+
+const createTrainerIntoDB = async (payload: TUser) => {
+  const user = await User.findOne({ email: payload.email });
+  payload.role = USER_ROLE.trainer
+  if (user) {
+    const trainer = await User.findByIdAndUpdate(user._id, payload);
+    return trainer;
+  }
+
+  const trainer = await User.create(payload);
+  return trainer;
+};
+
 const getAllUser = async () => {
   const result = await User.find();
   return result;
@@ -57,6 +70,7 @@ const deleteUserIntoDB = async (id: string) => {
 
 export const UserServices = {
   createAdminIntoDB,
+  createTrainerIntoDB,
   getUserFromDB,
   getAllUser,
   updateUserIntoDB, 

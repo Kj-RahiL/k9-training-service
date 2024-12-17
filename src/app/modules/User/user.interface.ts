@@ -6,7 +6,7 @@ export type TUser = {
   phone:string
   address:string
   password: string;
-  role: 'admin' | 'user' ;
+  role: 'admin' | 'trainer' | 'user' ;
   passwordChangeAt?: Date;
   status: 'active' | 'blocked';
   isDeleted: boolean;

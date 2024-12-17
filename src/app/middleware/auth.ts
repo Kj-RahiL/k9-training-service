@@ -32,12 +32,12 @@ const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
         throw new AppError(403, 'This user is blocked ! !');
       }
 
-      
+      console.log(role, requiredRoles.includes(role), 'aaaa')
     if (!requiredRoles.includes(role)) {
       throw new AppError(401, "You are not authorized to access this route");
     }
     req.user = decoded as JwtPayload;
-    console.log(req.user, "to auth");
+    console.log(req.user, "to auth u");
     next();
   });
 };

@@ -14,10 +14,21 @@ const createAdmin = catchAsync(async (req, res) => {
   });
 });
 
+const createTrainer = catchAsync(async (req, res) => {
+  console.log("hit trainer")
+  const result = await UserServices.createTrainerIntoDB(req.body);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Trainer created successfully',
+    data: result,
+  });
+});
+
 
 const getAllUser = catchAsync(async (req, res) => {
   const result = await UserServices.getAllUser();
-
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -25,6 +36,7 @@ const getAllUser = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
 const getUser = catchAsync(async (req, res) => {
   const {id} =req.params
   const result = await UserServices.getUserFromDB(id);
@@ -64,6 +76,7 @@ const deleteUser = catchAsync(async (req, res) => {
 
 export const userControllers = {
   createAdmin,
+  createTrainer,
   getAllUser,
   getUser,
   updateUser,

@@ -37,7 +37,7 @@ const login = catchAsync(async (req, res) => {
   });
 });
 const changePassword = catchAsync(async (req, res) => {
-    console.log(req.user, req.body, "to auth ontroller" )
+    // console.log(req.user, req.body, "to auth ontroller" )
 
   const result = await AuthServices.changePasswordIntoDB(
     req.user, req.body
