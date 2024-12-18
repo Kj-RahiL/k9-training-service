@@ -1,4 +1,3 @@
-
 import express from 'express';
 import validateRequest from '../../middleware/validateRequest';
 import { ServiceValidation } from './service.validation';
@@ -9,18 +8,18 @@ const router = express.Router();
 //create admin
 router.post(
   '/create-service',
- validateRequest(ServiceValidation.serviceValidationSchema),
- ServiceControllers.createService
+  validateRequest(ServiceValidation.serviceValidationSchema),
+  ServiceControllers.createService,
 );
 
 //get single user
-router.get('/:id', ServiceControllers.getSingleService );
+router.get('/:id', ServiceControllers.getSingleService);
 
 //update
 router.put(
   '/:id',
   validateRequest(ServiceValidation.updateServiceValidationSchema),
-  ServiceControllers.updateService
+  ServiceControllers.updateService,
 );
 //delete
 router.delete('/:id', ServiceControllers.deleteService);

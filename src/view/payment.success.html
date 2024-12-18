@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Success</title>
+    <style>
+      :root {
+        --purple: #8a70ff;
+        --black: #000000;
+        --gray: #666666;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        padding: 20px;
+      }
+
+      .success-container {
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .illustration {
+        position: relative;
+        height: 200px;
+        margin-bottom: 40px;
+      }
+
+      .illustration .circle-image {
+        width: 120px;
+        height: 120px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .illustration .cloud {
+        width: 60px;
+        height: 20px;
+        background-color: #f0f0f0;
+        border-radius: 20px;
+        position: absolute;
+      }
+
+      .illustration .cloud:nth-child(2) {
+        left: 20%;
+        top: 60%;
+      }
+
+      .illustration .cloud:nth-child(3) {
+        right: 20%;
+        top: 40%;
+      }
+
+      .illustration .dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--black);
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      .illustration .dot:nth-child(4) {
+        left: 30%;
+        top: 30%;
+      }
+      .illustration .dot:nth-child(5) {
+        right: 25%;
+        top: 45%;
+      }
+      .illustration .dot:nth-child(6) {
+        left: 40%;
+        bottom: 30%;
+      }
+      .illustration .dot:nth-child(7) {
+        right: 35%;
+        bottom: 25%;
+      }
+
+      .badge {
+        width: 64px;
+        height: 64px;
+        background-color: var(--purple);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        position: relative;
+        transform: rotate(45deg);
+      }
+
+      .badge::before {
+        content: '✓';
+        color: white;
+        font-size: 32px;
+        transform: rotate(-45deg);
+      }
+
+      .success-text {
+        font-size: 20px;
+        color: var(--black);
+        margin-bottom: 24px;
+        font-weight: 500;
+      }
+
+      .back-button {
+        display: inline-block;
+        width: 100%;
+        padding: 16px;
+        border: 1px solid var(--gray);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--black);
+        font-size: 16px;
+        text-decoration: none;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .back-button:hover {
+        background-color: #f5f5f5;
+      }
+
+      @media (max-width: 480px) {
+        .success-container {
+          padding: 16px;
+        }
+
+        .illustration {
+          height: 160px;
+        }
+
+        .success-text {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="success-container">
+      <div class="illustration">
+        <img
+          src="../assests//Ilustration - Register.png"
+          alt="Black circle"
+          style="width: 400px; height: 200px; object-fit: cover"
+        />
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="badge"></div>
+      <h1 class="success-text">Your Payment Successfully</h1>
+      <a href="/" class="back-button">Back to Home</a>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,3 @@
-
 import AppError from '../../errors/AppError';
 import { USER_ROLE } from './user.constant';
 import { TUser } from './user.interface';
@@ -7,7 +6,7 @@ import { User } from './user.model';
 const createAdminIntoDB = async (payload: TUser) => {
   const user = await User.findOne({ email: payload.email });
 
-  payload.role = USER_ROLE.admin
+  payload.role = USER_ROLE.admin;
   if (user) {
     const admin = await User.findByIdAndUpdate(user._id, payload);
     return admin;
@@ -19,7 +18,7 @@ const createAdminIntoDB = async (payload: TUser) => {
 
 const createTrainerIntoDB = async (payload: TUser) => {
   const user = await User.findOne({ email: payload.email });
-  payload.role = USER_ROLE.trainer
+  payload.role = USER_ROLE.trainer;
   if (user) {
     const trainer = await User.findByIdAndUpdate(user._id, payload);
     return trainer;
@@ -45,11 +44,10 @@ const getUserFromDB = async (id: string) => {
   return user;
 };
 
-
 const updateUserIntoDB = async (id: string, payload: TUser) => {
   const isUser = await User.findById(id);
 
-  console.log(isUser)
+  console.log(isUser);
 
   if (!isUser) {
     throw new AppError(404, 'user not found');
@@ -64,7 +62,11 @@ const deleteUserIntoDB = async (id: string) => {
   if (!isUser) {
     throw new AppError(404, 'user not found');
   }
-  const user = await User.findByIdAndUpdate(id, {isDeleted: true}, {new:true} );
+  const user = await User.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  );
   return user;
 };
 
@@ -73,6 +75,6 @@ export const UserServices = {
   createTrainerIntoDB,
   getUserFromDB,
   getAllUser,
-  updateUserIntoDB, 
-  deleteUserIntoDB
+  updateUserIntoDB,
+  deleteUserIntoDB,
 };

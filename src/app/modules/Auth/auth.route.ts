@@ -1,10 +1,10 @@
-import { Router } from "express";
-import validateRequest from "../../middleware/validateRequest";
-import { AuthValidation } from "./auth.validation";
-import { UserValidations } from "../User/user.validation";
-import { AuthControllers } from "./auth.controller";
-import Auth from "../../middleware/auth";
-import { USER_ROLE } from "../User/user.constant";
+import { Router } from 'express';
+import validateRequest from '../../middleware/validateRequest';
+import { AuthValidation } from './auth.validation';
+import { UserValidations } from '../User/user.validation';
+import { AuthControllers } from './auth.controller';
+import Auth from '../../middleware/auth';
+import { USER_ROLE } from '../User/user.constant';
 
 const router = Router();
 
@@ -26,17 +26,11 @@ router.post(
   validateRequest(AuthValidation.changePasswordValidationSchema),
   AuthControllers.changePassword,
 );
-router.post(
-  '/forget-password',
-  AuthControllers.forgetPassword,
-);
+router.post('/forget-password', AuthControllers.forgetPassword);
 router.post(
   '/refresh-token',
   validateRequest(AuthValidation.refreshTokenValidationSchema),
   AuthControllers.refreshToken,
 );
-
-
-
 
 export const AuthRoutes = router;

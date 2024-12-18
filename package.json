@@ -6,8 +6,10 @@
   "scripts": {
     "prod": "node ./dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts ",
-    "lint": "eslint .js,.ts .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "lint:fix": "npx eslint src --fix",
+    "lint": "eslint src  .eslintignore --ext .ts",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "prettier:fix": "npx prettier --write src",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,6 +23,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.0",
+    "stripe": "^17.4.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

@@ -1,17 +1,17 @@
-import config from "../../config";
-import AppError from "../../errors/AppError";
-import { USER_ROLE } from "../User/user.constant";
-import { TUser } from "../User/user.interface";
-import { User } from "../User/user.model";
-import { TChangePassword, TLoginUser } from "./auth.interface";
-import { isPasswordMatched } from "./auth.utils";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import config from '../../config';
+import AppError from '../../errors/AppError';
+import { USER_ROLE } from '../User/user.constant';
+import { TUser } from '../User/user.interface';
+import { User } from '../User/user.model';
+import { TChangePassword, TLoginUser } from './auth.interface';
+import { isPasswordMatched } from './auth.utils';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 const signupFromDB = async (payload: TUser) => {
   const user = await User.findOne({ email: payload.email });
   if (user) {
-    throw new AppError(403, "This user already exists");
+    throw new AppError(403, 'This user already exists');
   }
 
   payload.role = USER_ROLE.user;
@@ -22,14 +22,14 @@ const signupFromDB = async (payload: TUser) => {
 
 const loginIntoDB = async (payload: TLoginUser) => {
   const isUser = await User.findOne({ email: payload.email }).select(
-    "+password"
+    '+password',
   );
   if (!isUser) {
-    throw new AppError(404, "User not found");
+    throw new AppError(404, 'User not found');
   }
   const passwordMatch = await isPasswordMatched(
     payload.password,
-    isUser.password
+    isUser.password,
   );
   if (!passwordMatch) {
     throw new AppError(404, "Password doesn't match !");
@@ -52,7 +52,7 @@ const loginIntoDB = async (payload: TLoginUser) => {
   const refreshToken = jwt.sign(
     jwtPayload,
     config.jwt_refresh_secret as string,
-    { expiresIn: config.jwt_refresh_expire_in }
+    { expiresIn: config.jwt_refresh_expire_in },
   );
 
   return {
@@ -63,19 +63,19 @@ const loginIntoDB = async (payload: TLoginUser) => {
 
 const changePasswordIntoDB = async (
   userData: JwtPayload,
-  payload: TChangePassword
+  payload: TChangePassword,
 ) => {
   const user = await User.findOne({ email: userData.email }).select(
-    "+password"
+    '+password',
   );
-  if (!user) throw new AppError(404, "User not found");
+  if (!user) throw new AppError(404, 'User not found');
 
   // Matching existing password
   const passwordMatch = await isPasswordMatched(
     payload.existingPassword,
-    user.password
+    user.password,
   );
-  console.log("Password Match Result:", passwordMatch);
+  console.log('Password Match Result:', passwordMatch);
 
   if (!passwordMatch) {
     throw new AppError(403, "Password doesn't match!");
@@ -83,12 +83,12 @@ const changePasswordIntoDB = async (
 
   // Validate that the new password matches the confirm password
   if (payload.newPassword !== payload.confirmPassword) {
-    throw new AppError(400, "New password and confirm password do not match");
+    throw new AppError(400, 'New password and confirm password do not match');
   }
 
   const newHashPassword = await bcrypt.hash(
     payload.newPassword,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt_salt_rounds),
   );
 
   await User.findOneAndUpdate(
@@ -96,7 +96,7 @@ const changePasswordIntoDB = async (
     {
       password: newHashPassword,
       passwordChangeAt: new Date(),
-    }
+    },
   );
 
   return user;

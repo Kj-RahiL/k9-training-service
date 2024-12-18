@@ -1,9 +1,7 @@
-
 import express from 'express';
 import validateRequest from '../../middleware/validateRequest';
 import { UserValidations } from './user.validation';
 import { userControllers } from './user.controllers';
-
 
 const router = express.Router();
 
@@ -31,10 +29,7 @@ router.put(
   userControllers.updateUser,
 );
 //delete
-router.delete(
-  '/:id',
-  userControllers.deleteUser,
-);
+router.delete('/:id', userControllers.deleteUser);
 
 //get All user
 router.get('/', userControllers.getAllUser);

@@ -1,14 +1,14 @@
-import config from "../config";
-import AppError from "../errors/AppError";
-import { USER_ROLE } from "../modules/User/user.constant";
-import { User } from "../modules/User/user.model";
-import catchAsync from "../utils/catchAsync";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import config from '../config';
+import AppError from '../errors/AppError';
+import { USER_ROLE } from '../modules/User/user.constant';
+import { User } from '../modules/User/user.model';
+import catchAsync from '../utils/catchAsync';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
   return catchAsync(async (req, res, next) => {
     const token = req.headers.authorization;
-    console.log(token , 'to auth');
+    console.log(token, 'to auth');
 
     if (!token) {
       throw new AppError(401, "You're not authorized, auth");
@@ -16,7 +16,7 @@ const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
 
     const decoded = jwt.verify(
       token,
-      config.jwt_access_secret as string
+      config.jwt_access_secret as string,
     ) as JwtPayload;
     const { role, email } = decoded;
 
@@ -25,21 +25,21 @@ const Auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
     if (!user) {
       throw new AppError(401, "you're not authorized");
     }
-      // checking if the user is blocked
-      const userStatus = user?.status;
+    // checking if the user is blocked
+    const userStatus = user?.status;
 
-      if (userStatus === 'blocked') {
-        throw new AppError(403, 'This user is blocked ! !');
-      }
+    if (userStatus === 'blocked') {
+      throw new AppError(403, 'This user is blocked ! !');
+    }
 
-      console.log(role, requiredRoles.includes(role), 'aaaa')
+    console.log(role, requiredRoles.includes(role), 'aaaa');
     if (!requiredRoles.includes(role)) {
-      throw new AppError(401, "You are not authorized to access this route");
+      throw new AppError(401, 'You are not authorized to access this route');
     }
     req.user = decoded as JwtPayload;
-    console.log(req.user, "to auth u");
+    console.log(req.user, 'to auth u');
     next();
   });
 };
 
-export default Auth
+export default Auth;

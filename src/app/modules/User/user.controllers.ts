@@ -1,7 +1,6 @@
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
-import { UserServices } from "./user.services";
-
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { UserServices } from './user.services';
 
 const createAdmin = catchAsync(async (req, res) => {
   const result = await UserServices.createAdminIntoDB(req.body);
@@ -15,7 +14,7 @@ const createAdmin = catchAsync(async (req, res) => {
 });
 
 const createTrainer = catchAsync(async (req, res) => {
-  console.log("hit trainer")
+  console.log('hit trainer');
   const result = await UserServices.createTrainerIntoDB(req.body);
 
   sendResponse(res, {
@@ -25,7 +24,6 @@ const createTrainer = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
 
 const getAllUser = catchAsync(async (req, res) => {
   const result = await UserServices.getAllUser();
@@ -38,7 +36,7 @@ const getAllUser = catchAsync(async (req, res) => {
 });
 
 const getUser = catchAsync(async (req, res) => {
-  const {id} =req.params
+  const { id } = req.params;
   const result = await UserServices.getUserFromDB(id);
   sendResponse(res, {
     statusCode: 200,
@@ -49,9 +47,8 @@ const getUser = catchAsync(async (req, res) => {
 });
 
 const updateUser = catchAsync(async (req, res) => {
-  
   const { id } = req.params;
-  console.log('api hit', id, req.params)
+  console.log('api hit', id, req.params);
   const result = await UserServices.updateUserIntoDB(id, req.body);
 
   sendResponse(res, {
@@ -80,5 +77,5 @@ export const userControllers = {
   getAllUser,
   getUser,
   updateUser,
-  deleteUser
+  deleteUser,
 };

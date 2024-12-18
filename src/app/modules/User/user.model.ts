@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-this-alias */
 import { model, Schema } from 'mongoose';
 
 import bcrypt from 'bcrypt';
@@ -13,12 +14,15 @@ const userSchema = new Schema<TUser>(
       required: [true, 'Email is required'],
       unique: true,
     },
-    phone:{
+    image: {
+      type: String,
+    },
+    phone: {
       type: String,
       unique: true,
     },
-    address:{
-      type: String
+    address: {
+      type: String,
     },
 
     password: {
@@ -47,7 +51,6 @@ const userSchema = new Schema<TUser>(
   },
 );
 
-
 // query middleware
 userSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
@@ -69,11 +72,11 @@ userSchema.pre('save', async function (next) {
 
   user.password = await bcrypt.hash(
     user.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt_salt_rounds),
   );
 
   next();
-})
+});
 
 userSchema.post('save', function (doc, next) {
   doc.password = '';

@@ -1,10 +1,8 @@
-
 import mongoose from 'mongoose';
 import app from './app';
 import { Server } from 'http';
 import config from './app/config';
 import { autoUser } from './app/utils/autoUsers';
-
 
 let server: Server;
 async function main() {

@@ -1,5 +1,3 @@
-
-
 import config from '../../config';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
@@ -17,10 +15,8 @@ const signup = catchAsync(async (req, res) => {
 });
 
 const login = catchAsync(async (req, res) => {
-  const result = await AuthServices.loginIntoDB(
-    req.body,
-  );
-  const { accessToken, refreshToken } = result
+  const result = await AuthServices.loginIntoDB(req.body);
+  const { accessToken, refreshToken } = result;
 
   const user = await User.findOne({ email: req.body.email });
 
@@ -37,11 +33,9 @@ const login = catchAsync(async (req, res) => {
   });
 });
 const changePassword = catchAsync(async (req, res) => {
-    // console.log(req.user, req.body, "to auth ontroller" )
+  // console.log(req.user, req.body, "to auth ontroller" )
 
-  const result = await AuthServices.changePasswordIntoDB(
-    req.user, req.body
-  );
+  const result = await AuthServices.changePasswordIntoDB(req.user, req.body);
   res.status(201).json({
     statusCode: 200,
     success: true,
@@ -51,9 +45,7 @@ const changePassword = catchAsync(async (req, res) => {
 });
 
 const forgetPassword = catchAsync(async (req, res) => {
-  const result = await AuthServices.loginIntoDB(
-    req.body,
-  );
+  const result = await AuthServices.loginIntoDB(req.body);
 
   res.status(201).json({
     statusCode: 200,
@@ -83,12 +75,10 @@ const refreshToken = catchAsync(async (req, res) => {
   });
 });
 
-
-
 export const AuthControllers = {
   signup,
   login,
   changePassword,
-  forgetPassword, 
-  refreshToken
+  forgetPassword,
+  refreshToken,
 };

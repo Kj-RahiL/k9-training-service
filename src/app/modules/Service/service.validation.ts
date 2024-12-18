@@ -1,6 +1,4 @@
-import { z } from "zod";
-
-
+import { z } from 'zod';
 
 const serviceValidationSchema = z.object({
   body: z.object({
@@ -18,8 +16,7 @@ const updateServiceValidationSchema = z.object({
   }),
 });
 
-export const  ServiceValidation= {
-    serviceValidationSchema,
-    updateServiceValidationSchema
-
-}
+export const ServiceValidation = {
+  serviceValidationSchema,
+  updateServiceValidationSchema,
+};

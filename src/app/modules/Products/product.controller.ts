@@ -1,14 +1,13 @@
-import catchAsync from "../../utils/catchAsync";
-import sendResponse from "../../utils/sendResponse";
-import { ProductService } from "./product.service";
-
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { ProductService } from './product.service';
 
 const createProduct = catchAsync(async (req, res) => {
   const result = await ProductService.createProductIntoDB(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Product created successfully!",
+    message: 'Product created successfully!',
     data: result,
   });
 });
@@ -19,7 +18,7 @@ const getSingleProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Product retrieved successfully!",
+    message: 'Product retrieved successfully!',
     data: result,
   });
 });
@@ -29,7 +28,7 @@ const getAllProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Products are retrieved successfully!",
+    message: 'Products are retrieved successfully!',
     data: result,
   });
 });
@@ -40,7 +39,7 @@ const updateProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Product updated successfully!",
+    message: 'Product updated successfully!',
     data: result,
   });
 });
@@ -51,7 +50,7 @@ const deleteProduct = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Product deleted successfully!",
+    message: 'Product deleted successfully!',
     data: result,
   });
 });

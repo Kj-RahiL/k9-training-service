@@ -1,6 +1,7 @@
-import { TGenericErrorResponse } from "../interface/error";
-import { TErrorSources } from "../interface/error";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { TGenericErrorResponse } from '../interface/error';
+import { TErrorSources } from '../interface/error';
 
 const handleDuplicateError = (err: any): TGenericErrorResponse => {
   // Extract value within double quotes using regex
