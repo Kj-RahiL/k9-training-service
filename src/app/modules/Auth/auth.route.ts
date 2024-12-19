@@ -26,7 +26,12 @@ router.post(
   validateRequest(AuthValidation.changePasswordValidationSchema),
   AuthControllers.changePassword,
 );
+
+// forget password to verify otp and reset password
 router.post('/forget-password', AuthControllers.forgetPassword);
+router.post('/verifyOtp', AuthControllers.verifyOtpAndResetPassword);
+
+
 router.post(
   '/refresh-token',
   validateRequest(AuthValidation.refreshTokenValidationSchema),

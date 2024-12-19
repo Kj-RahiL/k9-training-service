@@ -4,7 +4,7 @@ import { PaymentService } from './payment.service';
 
 const checkOut = catchAsync(async (req, res) => {
   const {items}=req.body
-  console.log(items, 'he')
+  console.log(req.body, 'he')
   const result = await PaymentService.checkOutIntoDB(items);
   console.log(result, "ree")
   sendResponse(res, {

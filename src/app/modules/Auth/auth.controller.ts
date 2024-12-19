@@ -44,16 +44,33 @@ const changePassword = catchAsync(async (req, res) => {
   });
 });
 
-const forgetPassword = catchAsync(async (req, res) => {
-  const result = await AuthServices.loginIntoDB(req.body);
 
-  res.status(201).json({
+
+const forgetPassword = catchAsync(async (req, res) => {
+  const {email} = req.body
+  const result = await AuthServices.forgetPassword(email);
+
+  sendResponse(res, {
     statusCode: 200,
-    success: true,
-    message: 'User logged in successfully!',
+    success:true,
+    message: 'Please check your email to get the otp!',
     data: result,
   });
 });
+
+const verifyOtpAndResetPassword = catchAsync(async (req, res) => {
+  const {email, otp, password, newPassword} = req.body
+  const result = await AuthServices.verifyOtpAndResetPassword(email, otp, password, newPassword);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Password reset successfully!',
+    data: result,
+  });
+});
+
+
 
 const refreshToken = catchAsync(async (req, res) => {
   const { accessToken, refreshToken } = await AuthServices.loginIntoDB(
@@ -80,5 +97,6 @@ export const AuthControllers = {
   login,
   changePassword,
   forgetPassword,
+  verifyOtpAndResetPassword,
   refreshToken,
 };

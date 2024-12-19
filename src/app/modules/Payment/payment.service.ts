@@ -24,10 +24,12 @@ const checkOutIntoDB = async (items: { productId: string; quantity: number }[]) 
             name: product.name,
             description: product.description,
             images: [product.image], // Add the product image if available
+            
           },
           unit_amount: Math.round(product.price * 100), // Convert to cents
         },
         quantity: item.quantity,
+        
       };
     })
   );
@@ -40,8 +42,19 @@ const checkOutIntoDB = async (items: { productId: string; quantity: number }[]) 
     success_url: `${config.base_url}/success`,
     cancel_url: `${config.base_url}/cancel`,
   });
-
-  return session;
+  const orderDetails = session.metadata?.orderDetails
+  ? JSON.parse(session.metadata.orderDetails)
+  : [];
+console.log(session)
+  return {
+   id: session.id,
+   data: orderDetails,
+   cancelUrl: session.cancel_url,
+   successUrl: session.success_url,
+   amount: session.amount_total,
+    url: session.url,
+    paymentStatus:"pending"
+  };
 };
 export const PaymentService = {
   checkOutIntoDB,

@@ -8,5 +8,7 @@ export type TUser = {
   role: 'admin' | 'trainer' | 'user';
   passwordChangeAt?: Date;
   status: 'active' | 'blocked';
+  otp: string,
+  otpExpiresAt: string
   isDeleted: boolean;
 };

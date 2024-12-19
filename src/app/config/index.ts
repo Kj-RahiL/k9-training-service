@@ -17,4 +17,6 @@ export default {
   admin_pass: process.env.Admin_pass,
   stripe_published_key: process.env.STRIPE_PUBLISHED_KEY,
   stripe_secret_key: process.env.STRIPE_SECRET_KEY,
+  sender_email:process.env.SENDER_EMAIL,
+  sender_pass:process.env.SENDER_PASS
 };

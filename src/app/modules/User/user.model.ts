@@ -36,6 +36,8 @@ const userSchema = new Schema<TUser>(
       enum: Object.keys(USER_ROLE),
       default: USER_ROLE.user,
     },
+    otp: { type: String },
+    otpExpiresAt: { type: String },
     passwordChangeAt: {
       type: Date,
     },
