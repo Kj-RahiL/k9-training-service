@@ -44,23 +44,26 @@ const changePassword = catchAsync(async (req, res) => {
   });
 });
 
-
-
 const forgetPassword = catchAsync(async (req, res) => {
-  const {email} = req.body
+  const { email } = req.body;
   const result = await AuthServices.forgetPassword(email);
 
   sendResponse(res, {
     statusCode: 200,
-    success:true,
+    success: true,
     message: 'Please check your email to get the otp!',
     data: result,
   });
 });
 
 const verifyOtpAndResetPassword = catchAsync(async (req, res) => {
-  const {email, otp, password, newPassword} = req.body
-  const result = await AuthServices.verifyOtpAndResetPassword(email, otp, password, newPassword);
+  const { email, otp, password, newPassword } = req.body;
+  const result = await AuthServices.verifyOtpAndResetPassword(
+    email,
+    otp,
+    password,
+    newPassword,
+  );
 
   sendResponse(res, {
     statusCode: 200,
@@ -70,25 +73,15 @@ const verifyOtpAndResetPassword = catchAsync(async (req, res) => {
   });
 });
 
-
-
 const refreshToken = catchAsync(async (req, res) => {
-  const { accessToken, refreshToken } = await AuthServices.loginIntoDB(
-    req.body,
-  );
-
-  const user = await User.findOne({ email: req.body.email });
-
-  res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-    secure: config.NODE_ENV === 'production',
-  });
-  res.status(201).json({
+  const { refreshToken } = req.cookies;
+  console.log(refreshToken)
+  const result = await AuthServices.refreshToken(refreshToken);
+  sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: 'User logged in successfully!',
-    token: accessToken,
-    data: user,
+    message: 'Access token is retrieved successful',
+    data: result,
   });
 });
 

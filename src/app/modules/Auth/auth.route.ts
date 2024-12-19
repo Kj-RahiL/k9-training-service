@@ -4,7 +4,6 @@ import { AuthValidation } from './auth.validation';
 import { UserValidations } from '../User/user.validation';
 import { AuthControllers } from './auth.controller';
 import Auth from '../../middleware/auth';
-import { USER_ROLE } from '../User/user.constant';
 
 const router = Router();
 
@@ -22,7 +21,7 @@ router.post(
 
 router.post(
   '/change-password',
-  Auth(USER_ROLE.admin, USER_ROLE.user),
+  Auth(),
   validateRequest(AuthValidation.changePasswordValidationSchema),
   AuthControllers.changePassword,
 );
@@ -30,7 +29,6 @@ router.post(
 // forget password to verify otp and reset password
 router.post('/forget-password', AuthControllers.forgetPassword);
 router.post('/verifyOtp', AuthControllers.verifyOtpAndResetPassword);
-
 
 router.post(
   '/refresh-token',

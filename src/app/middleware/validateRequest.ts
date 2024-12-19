@@ -4,12 +4,12 @@ import catchAsync from '../utils/catchAsync';
 
 const validateRequest = (schema: AnyZodObject) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body, 'booo')
+    console.log(req.body, 'booo');
     await schema.parseAsync({
       body: req.body,
       cookies: req.cookies,
     });
-  
+
     next();
   });
 };

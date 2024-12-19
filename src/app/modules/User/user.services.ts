@@ -44,6 +44,18 @@ const getUserFromDB = async (id: string) => {
   return user;
 };
 
+const getMeFromDB = async (id: string) => {
+  console.log(id)
+  const user = await User.findById(id);
+  if (!user) {
+    throw new AppError(404, 'User Not found.');
+  }
+  if (user.status === 'blocked') {
+    throw new AppError(400, 'Cannot get user');
+  }
+  return user;
+};
+
 const updateUserIntoDB = async (id: string, payload: TUser) => {
   const isUser = await User.findById(id);
 
@@ -75,6 +87,7 @@ export const UserServices = {
   createTrainerIntoDB,
   getUserFromDB,
   getAllUser,
+  getMeFromDB,
   updateUserIntoDB,
   deleteUserIntoDB,
 };

@@ -46,6 +46,18 @@ const getUser = catchAsync(async (req, res) => {
   });
 });
 
+const getMe = catchAsync(async (req, res) => {
+  const user= req.user;
+  console.log(user,  )
+  const result = await UserServices.getMeFromDB(user.id);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Profile retrieved successfully!',
+    data: result,
+  });
+});
+
 const updateUser = catchAsync(async (req, res) => {
   const { id } = req.params;
   console.log('api hit', id, req.params);
@@ -76,6 +88,7 @@ export const userControllers = {
   createTrainer,
   getAllUser,
   getUser,
+  getMe,
   updateUser,
   deleteUser,
 };

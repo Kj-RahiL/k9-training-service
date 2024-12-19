@@ -110,10 +110,10 @@ const forgetPassword = async (email: string) => {
   }
   const otp = Math.floor(1000 + Math.random() * 9000).toString();
   const otpExpires = new Date();
-  otpExpires.setMinutes(otpExpires.getMinutes() + 5); 
+  otpExpires.setMinutes(otpExpires.getMinutes() + 5);
   const otpExpiresAt = otpExpires.toISOString();
 
-  console.log(otp, otpExpiresAt)
+  console.log(otp, otpExpiresAt);
 
   user.otp = otp;
   user.otpExpiresAt = otpExpiresAt;
@@ -132,7 +132,7 @@ const forgetPassword = async (email: string) => {
    <tr>
      <td style="padding: 20px;">
        <p style="font-size: 16px; margin: 0;">Hello <strong>${
-        user.name
+         user.name
        }</strong>,</p>
        <p style="font-size: 16px;">Please verify your email.</p>
        <div style="text-align: center; margin: 20px 0;">
@@ -155,20 +155,25 @@ const forgetPassword = async (email: string) => {
   return { message: 'OTP sent via your email successfully' };
 };
 
-const verifyOtpAndResetPassword = async (email: string, otp: string, password: string, newPassword:string) => {
+const verifyOtpAndResetPassword = async (
+  email: string,
+  otp: string,
+  password: string,
+  newPassword: string,
+) => {
   const user = await User.findOne({ email });
   if (!user) {
     throw new AppError(400, 'User not found');
   }
 
   if (user?.otp !== otp) {
-    throw new AppError(400,'Your OTP is Invalid!');
+    throw new AppError(400, 'Your OTP is Invalid!');
   } else if (!user.otpExpiresAt || new Date() > new Date(user.otpExpiresAt)) {
     throw new Error('Your OTP is expired, please send new otp');
   }
- 
-   // Validate that the new password matches the confirm password
-   if (password !== newPassword) {
+
+  // Validate that the new password matches the confirm password
+  if (password !== newPassword) {
     throw new AppError(400, 'New password and password do not match');
   }
   // Update password and clear OTP
@@ -180,10 +185,67 @@ const verifyOtpAndResetPassword = async (email: string, otp: string, password: s
   return { message: 'Password reset successfully' };
 };
 
+const refreshToken = async (token: string) => {
+  const decoded = jwt.verify(
+    token,
+    config.jwt_refresh_secret as string,
+  ) as JwtPayload;
+
+  const { email, iat } = decoded;
+
+  // checking user existing
+  const user = await User.findOne({ email }).select('+password');
+  if (!user) {
+    throw new AppError(404, 'User not found');
+  }
+  // checking if user is already deleted
+  const isDeleted = user?.isDeleted;
+  if (isDeleted) {
+    throw new AppError(403, 'This user is deleted !');
+  }
+
+  // checking user is blocked
+  const userStatus = user?.status;
+  if (userStatus === 'blocked') {
+    throw new AppError(403, 'This user is blocked !');
+  }
+  const isJWTIssuedBeforePasswordChanged = (
+    passwordChangeAt: Date,
+    iat: number,
+  ): boolean => {
+    const jwtIssuedTimestamp = iat * 1000;
+
+    if (!passwordChangeAt) return false;
+
+    const passwordTimestamp = new Date(passwordChangeAt).getTime();
+    return jwtIssuedTimestamp < passwordTimestamp;
+  };
+
+  // Check if the password was changed after the JWT was issued
+  if (
+    user.passwordChangeAt &&
+    isJWTIssuedBeforePasswordChanged(user.passwordChangeAt, iat as number)
+  ) {
+    throw new AppError(401, 'You are not authorized!');
+  }
+
+  //   create token and sent client
+  const jwtPayload = {
+    userId: user.id,
+    role: user.role,
+  };
+  const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
+    expiresIn: config.jwt_access_expire_in as string,
+  });
+  return { accessToken };
+};
+
+
 export const AuthServices = {
   signupFromDB,
   loginIntoDB,
   changePasswordIntoDB,
   forgetPassword,
-  verifyOtpAndResetPassword
+  verifyOtpAndResetPassword,
+  refreshToken
 };

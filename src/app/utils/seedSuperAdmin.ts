@@ -2,10 +2,10 @@ import config from '../config';
 import { USER_ROLE, USER_STATUS } from '../modules/User/user.constant';
 import { User } from '../modules/User/user.model';
 
-export const autoUser = async () => {
+export const seedSuperAdmin = async () => {
   try {
     const admin = await User.findOne({
-      role: USER_ROLE.admin,
+      role: USER_ROLE.superAdmin,
       email: config.admin_email,
       status: USER_STATUS.active,
     });
@@ -13,8 +13,8 @@ export const autoUser = async () => {
       console.log('Admin Created started...');
 
       await User.create({
-        name: 'Admin',
-        role: USER_ROLE.admin,
+        name: 'Super Admin',
+        role: USER_ROLE.superAdmin,
         email: config.admin_email,
         password: config.admin_pass,
         status: USER_STATUS.active,

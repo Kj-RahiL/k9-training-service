@@ -34,6 +34,6 @@ router.put(
 );
 
 // delete cart
-router.delete('/:id', CartController.deleteCart);
+router.delete('/:id',Auth(), CartController.deleteCart);
 
 export const CartRoutes = router;

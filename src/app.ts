@@ -3,7 +3,7 @@ import cors from 'cors';
 import router from './app/routes';
 import notFound from './app/middleware/notFound';
 import globalErrorHandler from './app/middleware/globalErrorHandler';
-import path from 'path'
+import path from 'path';
 
 const app: Application = express();
 
@@ -13,16 +13,15 @@ app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use('/api/v1', router);
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/success', (req, res) => {
   res.sendFile(path.join(__dirname, 'view', 'payment.success.html'));
 });
 
-app.get('/cancel', (req, res)=>{
-  res.redirect('/')
-})
+app.get('/cancel', (req, res) => {
+  res.redirect('/');
+});
 
 app.get('/', (req: Request, res: Response) => {
   res.send(`

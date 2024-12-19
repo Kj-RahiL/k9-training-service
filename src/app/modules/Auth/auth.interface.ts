@@ -8,5 +8,3 @@ export type TChangePassword = {
   newPassword: string;
   confirmPassword: string;
 };
-
-
